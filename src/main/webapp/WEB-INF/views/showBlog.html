@@ -15,8 +15,8 @@
 
 <div class="jumbotron text-center"
      style="margin-bottom:0; background-image: url('https://tinhte.vn/store/2017/03/4001518_cv.jpg')">
-    <h1>My First Bootstrap 4 Page</h1>
-    <p>Resize this responsive page to see the effect!</p>
+<!--    <h1>My First Bootstrap 4 Page</h1>-->
+<!--    <p>Resize this responsive page to see the effect!</p>-->
 </div>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
@@ -36,6 +36,7 @@
                 <a class="nav-link" href="#">Link</a>
             </li>
             <a type="button" class="btn btn-secondary" th:href="@{/create}">Create</a>
+            <a type="button" class="btn btn-secondary" th:href="@{/logout}">Log Out</a>
         </ul>
     </div>
 </nav>
@@ -48,6 +49,13 @@
             <p th:text="${blog.getContent()}"></p>
         </div>
     </div>
+    <button th:if="${blogs.hasPrevious()}"><a th:href="@{/blogs(page=${blogs.number}-1)}">Previus</a></button>
+    <b th:text="${blogs.number} + 1"></b> / <b th:text="${blogs.totalPages}"></b>
+    <button th:if="${blogs.hasNext()}"><a th:href="@{/blogs(page=${blogs.number}+1)}">Next</a></button>
+
+<!--    <a th:if="${blogs.hasNext()}" th:href="@{/blogs(page=${blogs.getNumber()+1})}">=>></a>-->
+<!--    <b th:text="${blogs.getNumber() + 1}"></b> / <b th:text="${blogs.getTotalPages()}"></b>-->
+<!--    <a th:if="${blogs.hasPrevious()}" th:href="@{/blogs(page=${blogs.getNumber()-1})}"> <<= </a>-->
 </div>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
@@ -60,16 +68,16 @@
         <div class="modal-content">
 
             <!-- Modal Header -->
-            <div class="modal-header">
-                <h4 class="modal-title" th:text="${blog.getTitle()}"></h4>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <div class="modal-header" >
+                <h4 th:text="${blog.getTitle()} "></h4>
+<!--                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>-->
             </div>
 
             <!-- Modal body -->
             <!--            <div class="modal-body">-->
             <!--                Modal body..-->
             <!--            </div>-->
-            <div class="container" style="margin-top:30px">
+            <div class="container" style="margin-top:30px; text-align: center" >
                 <img th:src="${blog.getImg()}" width="300" height="200">
                 <div class="row">
                     <p th:text="${blog.getCategory().getName()}"></p>
@@ -79,6 +87,7 @@
                 <a type="button" class="btn btn-dark" th:href="@{/delete/ (id=${blog.getId()})}">Delete</a>
             </div>
         </div>
+
 
         <!-- Modal footer -->
         <div class="modal-footer">

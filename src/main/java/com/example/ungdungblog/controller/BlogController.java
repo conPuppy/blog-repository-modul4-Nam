@@ -6,6 +6,8 @@ import com.example.ungdungblog.repository.IBlogRepo;
 import com.example.ungdungblog.service.BlogService;
 import com.example.ungdungblog.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
@@ -33,9 +35,9 @@ public class BlogController {
     }
 
     @GetMapping("/blogs")
-    public ModelAndView show() {
+    public ModelAndView show(@RequestParam(defaultValue = "0") int page) {
         ModelAndView modelAndView = new ModelAndView("showBlog");
-        modelAndView.addObject("blogs", blogService.getAll());
+        modelAndView.addObject("blogs", blogService.getAll(PageRequest.of(page,2, Sort.by("id"))));
         return modelAndView;
     }
 
